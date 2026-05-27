@@ -3,6 +3,8 @@ include "../config/database.php";
 include "../includes/header.php";
 include "../includes/navbar.php";
 
+/** @var mysqli $conn */
+
 $queryProses = mysqli_query($conn, "SELECT * FROM proses_pembuatan ORDER BY id_proses ASC");
 $totalProses = mysqli_num_rows($queryProses);
 ?>

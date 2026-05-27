@@ -2,6 +2,8 @@
 include "../auth/session.php";
 include "../../config/database.php";
 
+/** @var mysqli $conn */
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 $query = mysqli_query($conn, "SELECT * FROM galeri WHERE id_galeri='$id'");

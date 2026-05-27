@@ -3,6 +3,9 @@ include "../config/database.php";
 include "../includes/header.php";
 include "../includes/navbar.php";
 
+
+/** @var mysqli $conn */
+
 $queryGaleri = mysqli_query($conn, "SELECT * FROM galeri ORDER BY id_galeri ASC");
 $totalGaleri = mysqli_num_rows($queryGaleri);
 ?>

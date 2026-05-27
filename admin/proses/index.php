@@ -4,24 +4,16 @@ include "../../config/database.php";
 include "../includes/header.php";
 include "../includes/sidebar.php";
 
-$query = mysqli_query($conn, "SELECT * FROM proses_pembuatan ORDER BY id_proses ASC");
+
+/** @var mysqli $conn */
+
+$query = mysqli_query($conn, "SELECT * FROM proses_pembuatan ORDER BY id_proses DESC");
 $total_data = mysqli_num_rows($query);
 ?>
 
 <main class="admin-main">
 
-    <header class="admin-topbar">
-        <div></div>
-
-        <div class="topbar-user-simple">
-            <div class="user-icon">
-                <i class="bi bi-person"></i>
-            </div>
-
-            <span>Halo, <?= $_SESSION['nama'] ?? 'Admin'; ?></span>
-            <i class="bi bi-chevron-down"></i>
-        </div>
-    </header>
+    <?php include "../includes/topbar.php"; ?>
 
     <section class="admin-content">
 

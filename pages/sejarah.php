@@ -3,13 +3,15 @@ include "../config/database.php";
 include "../includes/header.php";
 include "../includes/navbar.php";
 
+
+
+/** @var mysqli $conn */
 /*
     HERO SEJARAH
 */
 $queryHero = mysqli_query($conn, "SELECT * FROM sejarah 
-                                  WHERE judul LIKE '%Sejarah Tenun Ikat%' 
-                                  ORDER BY id_sejarah DESC 
-                                  LIMIT 1");
+                                  WHERE kategori = 'hero'
+                                  ORDER BY id_sejarah ASC");
 $hero = mysqli_fetch_assoc($queryHero);
 
 $hero_judul = $hero ? $hero['judul'] : 'Sejarah Tenun Ikat Sumba Barat';
@@ -27,9 +29,8 @@ $hero_gambar = ($hero && !empty($hero['gambar']))
     01 ASAL USUL
 */
 $queryAsalUsul = mysqli_query($conn, "SELECT * FROM sejarah 
-                                      WHERE judul LIKE '%Asal Usul%' 
-                                      ORDER BY id_sejarah DESC 
-                                      LIMIT 1");
+                                      WHERE kategori = 'asal_usul'
+                                      ORDER BY id_sejarah ASC");
 $asalUsul = mysqli_fetch_assoc($queryAsalUsul);
 
 $asal_judul = $asalUsul ? $asalUsul['judul'] : 'Asal Usul Tenun Ikat Sumba Barat';
@@ -44,12 +45,20 @@ $asal_gambar = ($asalUsul && !empty($asalUsul['gambar']))
 
 
 /*
+    02 PERAN TENUN
+*/
+$queryPeran = mysqli_query($conn, "SELECT * FROM sejarah
+                                   WHERE kategori = 'peran'
+                                   ORDER BY id_sejarah ASC");
+$totalPeran = mysqli_num_rows($queryPeran);
+
+
+/*
     03 WARISAN
 */
 $queryWarisan = mysqli_query($conn, "SELECT * FROM sejarah 
-                                     WHERE judul LIKE '%Warisan%' 
-                                     ORDER BY id_sejarah DESC 
-                                     LIMIT 1");
+                                     WHERE kategori = 'warisan'
+                                     ORDER BY id_sejarah ASC");
 $warisan = mysqli_fetch_assoc($queryWarisan);
 
 $warisan_judul = $warisan ? $warisan['judul'] : 'Warisan yang Terus Dilestarikan';
@@ -61,13 +70,6 @@ $warisan_isi = $warisan
 $warisan_gambar = ($warisan && !empty($warisan['gambar']))
     ? "/uploads/sejarah/" . $warisan['gambar']
     : "/assets/img/sejarah/warisan.jpg";
-
-
-/*
-    02 PERAN TENUN
-*/
-$queryPeran = mysqli_query($conn, "SELECT * FROM peran_tenun ORDER BY id_peran ASC");
-$totalPeran = mysqli_num_rows($queryPeran);
 ?>
 
 <!-- HERO SEJARAH -->
@@ -155,10 +157,10 @@ $totalPeran = mysqli_num_rows($queryPeran);
 
                     <?php
                     $gambar_peran = !empty($peran['gambar'])
-                        ? "/uploads/peran/" . $peran['gambar']
+                        ? "/uploads/sejarah/" . $peran['gambar']
                         : "/assets/img/sejarah/default-peran.jpg";
 
-                    $modalId = "modalPeran" . $peran['id_peran'];
+                    $modalId = "modalPeran" . $peran['id_sejarah'];
                     ?>
 
                     <div class="col-md-4">
@@ -224,11 +226,60 @@ $totalPeran = mysqli_num_rows($queryPeran);
 
             <?php else : ?>
 
-                <div class="col-12">
-                    <div class="history-center">
-                        <p>
-                            Data peran tenun belum ditambahkan oleh admin.
-                        </p>
+                <div class="col-md-4">
+                    <div class="history-card">
+
+                        <div class="history-card-image">
+                            <img src="/assets/img/sejarah/default-peran.jpg"
+                                 alt="Kelahiran">
+                        </div>
+
+                        <div class="history-card-body">
+                            <h4>Kelahiran</h4>
+
+                            <p>
+                                Digunakan dalam ritual kelahiran sebagai simbol doa dan harapan bagi bayi yang lahir.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="history-card">
+
+                        <div class="history-card-image">
+                            <img src="/assets/img/sejarah/default-peran.jpg"
+                                 alt="Pernikahan">
+                        </div>
+
+                        <div class="history-card-body">
+                            <h4>Pernikahan</h4>
+
+                            <p>
+                                Menjadi bagian penting dalam upacara pernikahan sebagai simbol ikatan dan kebersamaan.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="history-card">
+
+                        <div class="history-card-image">
+                            <img src="/assets/img/sejarah/default-peran.jpg"
+                                 alt="Upacara Adat">
+                        </div>
+
+                        <div class="history-card-body">
+                            <h4>Upacara Adat</h4>
+
+                            <p>
+                                Digunakan dalam berbagai upacara adat sebagai bentuk penghormatan kepada leluhur dan tradisi.
+                            </p>
+                        </div>
+
                     </div>
                 </div>
 

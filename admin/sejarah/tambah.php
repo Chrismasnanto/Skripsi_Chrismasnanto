@@ -4,68 +4,76 @@ include "../../config/database.php";
 include "../includes/header.php";
 include "../includes/sidebar.php";
 
+
+/** @var mysqli $conn */
+
 if (isset($_POST['simpan'])) {
+
     $id_admin = $_SESSION['admin'];
 
+    $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
     $judul = mysqli_real_escape_string($conn, $_POST['judul']);
     $isi = mysqli_real_escape_string($conn, $_POST['isi']);
 
     $gambar = "";
 
     if (!empty($_FILES['gambar']['name'])) {
-        $nama_gambar = $_FILES['gambar']['name'];
-        $tmp_gambar = $_FILES['gambar']['tmp_name'];
-        $ekstensi = strtolower(pathinfo($nama_gambar, PATHINFO_EXTENSION));
 
-        $nama_baru = time() . "_" . uniqid() . "." . $ekstensi;
-        $folder_upload = "../../uploads/sejarah/";
+        $nama = $_FILES['gambar']['name'];
+        $tmp = $_FILES['gambar']['tmp_name'];
 
-        if (!is_dir($folder_upload)) {
-            mkdir($folder_upload, 0777, true);
-        }
-
+        $ext = strtolower(pathinfo($nama, PATHINFO_EXTENSION));
         $allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
-        if (in_array($ekstensi, $allowed)) {
-            move_uploaded_file($tmp_gambar, $folder_upload . $nama_baru);
+        if (in_array($ext, $allowed)) {
+
+            $nama_baru = time() . "_" . uniqid() . "." . $ext;
+            $folder = "../../uploads/sejarah/";
+
+            if (!is_dir($folder)) {
+                mkdir($folder, 0777, true);
+            }
+
+            move_uploaded_file($tmp, $folder . $nama_baru);
             $gambar = $nama_baru;
-        } else {
-            echo "<script>
-                    alert('Format gambar harus JPG, JPEG, PNG, atau WEBP');
-                  </script>";
         }
     }
 
-    $query = mysqli_query($conn, "INSERT INTO sejarah (id_admin, judul, isi, gambar) 
-                                  VALUES ('$id_admin', '$judul', '$isi', '$gambar')");
+    $query = mysqli_query($conn, "
+        INSERT INTO sejarah
+        (
+            id_admin,
+            kategori,
+            judul,
+            isi,
+            gambar
+        )
+        VALUES
+        (
+            '$id_admin',
+            '$kategori',
+            '$judul',
+            '$isi',
+            '$gambar'
+        )
+    ");
 
     if ($query) {
         echo "<script>
-                alert('Data sejarah berhasil ditambahkan');
-                window.location='index.php';
-              </script>";
+            alert('Data berhasil ditambahkan');
+            window.location='index.php';
+        </script>";
     } else {
         echo "<script>
-                alert('Data sejarah gagal ditambahkan');
-              </script>";
+            alert('Gagal menambahkan data');
+        </script>";
     }
 }
 ?>
 
 <main class="admin-main">
 
-    <header class="admin-topbar">
-        <div></div>
-
-        <div class="topbar-user-simple">
-            <div class="user-icon">
-                <i class="bi bi-person"></i>
-            </div>
-
-            <span>Halo, <?= $_SESSION['nama'] ?? 'Admin'; ?></span>
-            <i class="bi bi-chevron-down"></i>
-        </div>
-    </header>
+    <?php include "../includes/topbar.php"; ?>
 
     <section class="admin-content">
 
@@ -82,24 +90,59 @@ if (isset($_POST['simpan'])) {
                 </a>
             </div>
 
-            <form action="" method="POST" enctype="multipart/form-data" class="admin-form">
+            <form method="POST" enctype="multipart/form-data" class="admin-form">
 
                 <div class="form-admin-group">
+
+                    <label>Kategori</label>
+
+                    <select name="kategori" required>
+                        <option value="">Pilih kategori</option>
+                        <option value="hero">Hero</option>
+                        <option value="asal_usul">Asal Usul</option>
+                        <option value="peran">Peran Tenun</option>
+                        <option value="warisan">Warisan</option>
+                    </select>
+
+                </div>
+
+                <div class="form-admin-group">
+
                     <label>Judul</label>
-                    <input type="text" name="judul" placeholder="Masukkan judul sejarah" required>
+
+                    <input
+                        type="text"
+                        name="judul"
+                        placeholder="Masukkan judul sejarah"
+                        required>
+
                 </div>
 
                 <div class="form-admin-group">
+
                     <label>Isi</label>
-                    <textarea name="isi" rows="8" placeholder="Masukkan isi sejarah" required></textarea>
+
+                    <textarea
+                        name="isi"
+                        rows="8"
+                        placeholder="Masukkan isi sejarah"
+                        required></textarea>
+
                 </div>
 
                 <div class="form-admin-group">
+
                     <label>Gambar</label>
-                    <input type="file" name="gambar" accept="image/*">
+
+                    <input
+                        type="file"
+                        name="gambar"
+                        accept="image/*">
+
                 </div>
 
                 <div class="form-admin-action">
+
                     <button type="submit" name="simpan" class="btn-submit-admin">
                         Simpan
                     </button>
@@ -107,6 +150,7 @@ if (isset($_POST['simpan'])) {
                     <a href="index.php" class="btn-cancel-admin">
                         Batal
                     </a>
+
                 </div>
 
             </form>
@@ -121,4 +165,4 @@ if (isset($_POST['simpan'])) {
 
 </main>
 
-<?php include "../includes/footer.php"; ?>
+<?php include "../includes/footer.php"; ?>  

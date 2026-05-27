@@ -2,6 +2,8 @@
 include "../auth/session.php";
 include "../../config/database.php";
 
+/** @var mysqli $conn */
+
 $id = $_GET['id'];
 
 $query = mysqli_query($conn, "SELECT * FROM motif_makna WHERE id_motif='$id'");

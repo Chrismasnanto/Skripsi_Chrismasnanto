@@ -2,16 +2,16 @@
 include "auth/session.php";
 include "../config/database.php";
 
+
+/** @var mysqli $conn */
+
 $jml_beranda = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM beranda"));
+$jml_sejarah = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM sejarah"));
+$jml_motif   = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM motif_makna"));
+$jml_proses  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM proses_pembuatan"));
+$jml_galeri  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM galeri"));
+$jml_about   = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM about"));
 
-$jml_sejarah_utama = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM sejarah"));
-$jml_peran_tenun   = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM peran_tenun"));
-$jml_sejarah       = $jml_sejarah_utama + $jml_peran_tenun;
-
-$jml_motif  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM motif_makna"));
-$jml_proses = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM proses_pembuatan"));
-$jml_galeri = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM galeri"));
-$jml_about  = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM about"));
 $data_terbaru = [];
 
 function tambahDataTerbaru($conn, &$data_terbaru, $sql, $kategori, $folder_upload, $edit_link, $hapus_link)
@@ -104,25 +104,11 @@ tambahDataTerbaru(
     $data_terbaru,
     "SELECT id_about AS id_data, judul AS konten, '' AS gambar, created_at 
      FROM about 
-     ORDER BY created_at DESC 
-     LIMIT 3",
+     ORDER BY created_at ASC ",
     "About",
     "",
     "about/edit.php?id=",
     "about/hapus.php?id="
-);
-
-tambahDataTerbaru(
-    $conn,
-    $data_terbaru,
-    "SELECT id_peran AS id_data, judul AS konten, gambar, created_at 
-     FROM peran_tenun 
-     ORDER BY created_at DESC 
-     LIMIT 3",
-    "Peran Tenun",
-    "/uploads/peran/",
-    "sejarah/edit_peran.php?id=",
-    "sejarah/hapus_peran.php?id="
 );
 
 usort($data_terbaru, function ($a, $b) {
@@ -132,181 +118,254 @@ usort($data_terbaru, function ($a, $b) {
 $data_terbaru = array_slice($data_terbaru, 0, 8);
 
 include "includes/header.php";
+include "includes/sidebar.php";
 ?>
 
-<div class="admin-layout">
+<main class="admin-main">
 
-    <?php include "includes/sidebar.php"; ?>
+    <div class="admin-topbar">
 
-    <main class="admin-main">
+        <div class="topbar-account">
 
-        <div class="admin-topbar">
-            <div></div>
+            <div class="topbar-account-icon">
+                <i class="bi bi-person"></i>
+            </div>
 
-            <div class="topbar-user-simple">
-                <div class="user-icon">
-                    <i class="bi bi-person"></i>
+            <div class="topbar-account-name">
+                Halo, <?= htmlspecialchars($_SESSION['nama'] ?? 'Administrator'); ?>
+            </div>
+
+            <div class="topbar-account-menu">
+
+                <button type="button" class="topbar-account-btn" onclick="toggleAccountDropdown(event)">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+
+                <div class="topbar-account-dropdown" id="topbarAccountDropdown">
+
+                    <div class="account-dropdown-profile">
+
+                        <div class="account-dropdown-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+
+                        <div>
+                            <strong>
+                                <?= htmlspecialchars($_SESSION['nama'] ?? 'Administrator'); ?>
+                            </strong>
+
+                            <small>
+                                <?= htmlspecialchars($_SESSION['username'] ?? 'admin'); ?>
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="account-dropdown-line"></div>
+
+                    <a href="logout.php">
+                        <i class="bi bi-arrow-repeat"></i>
+                        Ganti Akun
+                    </a>
+
+                    <a href="logout.php">
+                        <i class="bi bi-box-arrow-right"></i>
+                        Logout
+                    </a>
+
                 </div>
 
-                <span>Halo, <?= $_SESSION['nama'] ?? 'Admin'; ?></span>
-                <i class="bi bi-chevron-down"></i>
             </div>
+
         </div>
 
-        <div class="admin-content">
+    </div>
 
-            <h1>Dashboard</h1>
+    <section class="admin-content">
 
-            <div class="dashboard-summary">
+        <h1>Dashboard</h1>
 
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-house-door"></i>
-                    </div>
-                    <div>
-                        <span>Beranda</span>
-                        <h3><?= $jml_beranda; ?></h3>
-                        <p>Data</p>
-                    </div>
+        <div class="dashboard-summary">
+
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-house-door"></i>
                 </div>
 
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-clock-history"></i>
-                    </div>
-                    <div>
-                        <span>Sejarah</span>
-                        <h3><?= $jml_sejarah; ?></h3>
-                        <p>Data</p>
-                    </div>
+                <div>
+                    <span>Beranda</span>
+                    <h3><?= $jml_beranda; ?></h3>
+                    <p>Data</p>
                 </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-grid-3x3-gap"></i>
-                    </div>
-                    <div>
-                        <span>Motif & Makna</span>
-                        <h3><?= $jml_motif; ?></h3>
-                        <p>Data</p>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-sliders"></i>
-                    </div>
-                    <div>
-                        <span>Proses Pembuatan</span>
-                        <h3><?= $jml_proses; ?></h3>
-                        <p>Data</p>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-image"></i>
-                    </div>
-                    <div>
-                        <span>Galeri</span>
-                        <h3><?= $jml_galeri; ?></h3>
-                        <p>Data</p>
-                    </div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="bi bi-info-circle"></i>
-                    </div>
-                    <div>
-                        <span>About</span>
-                        <h3><?= $jml_about; ?></h3>
-                        <p>Data</p>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="admin-table-box">
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
 
-                <h2>Data Terbaru</h2>
+                <div>
+                    <span>Sejarah</span>
+                    <h3><?= $jml_sejarah; ?></h3>
+                    <p>Data</p>
+                </div>
+            </div>
 
-                <div class="table-responsive">
-                    <table class="admin-wire-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Konten</th>
-                                <th>Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
 
-                        <tbody>
-                            <?php if (!empty($data_terbaru)) : ?>
-                                <?php foreach ($data_terbaru as $index => $data) : ?>
-                                    <tr>
-                                        <td><?= $index + 1; ?></td>
+                <div>
+                    <span>Motif & Makna</span>
+                    <h3><?= $jml_motif; ?></h3>
+                    <p>Data</p>
+                </div>
+            </div>
 
-                                        <td>
-                                            <div class="table-content-flex">
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-sliders"></i>
+                </div>
 
-                                                <?php if (!empty($data['gambar'])) : ?>
-                                                    <img src="<?= htmlspecialchars($data['folder_upload'] . $data['gambar']); ?>"
-                                                         alt="<?= htmlspecialchars($data['konten']); ?>"
-                                                         class="admin-thumb">
-                                                <?php else : ?>
-                                                    <div class="table-image-placeholder">
-                                                        <i class="bi bi-image"></i>
-                                                    </div>
-                                                <?php endif; ?>
+                <div>
+                    <span>Proses Pembuatan</span>
+                    <h3><?= $jml_proses; ?></h3>
+                    <p>Data</p>
+                </div>
+            </div>
 
-                                                <span><?= htmlspecialchars($data['konten']); ?></span>
-                                            </div>
-                                        </td>
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-image"></i>
+                </div>
 
-                                        <td><?= htmlspecialchars($data['kategori']); ?></td>
+                <div>
+                    <span>Galeri</span>
+                    <h3><?= $jml_galeri; ?></h3>
+                    <p>Data</p>
+                </div>
+            </div>
 
-                                        <td>
-                                            <div class="table-action">
-                                                <a href="<?= htmlspecialchars($data['edit_link'] . $data['id']); ?>"
-                                                   class="btn-table-action">
-                                                    <i class="bi bi-pencil"></i>
-                                                </a>
+            <div class="summary-card">
+                <div class="summary-icon">
+                    <i class="bi bi-info-circle"></i>
+                </div>
 
-                                                <a href="<?= htmlspecialchars($data['hapus_link'] . $data['id']); ?>"
-                                                   class="btn-table-action"
-                                                   onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                <div>
+                    <span>About</span>
+                    <h3><?= $jml_about; ?></h3>
+                    <p>Data</p>
+                </div>
+            </div>
 
-                            <?php else : ?>
+        </div>
+
+        <div class="admin-table-box">
+
+            <h2>Data Terbaru</h2>
+
+            <div class="table-responsive">
+
+                <table class="admin-wire-table">
+
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Konten</th>
+                            <th>Kategori</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <?php if (!empty($data_terbaru)) : ?>
+
+                            <?php foreach ($data_terbaru as $index => $data) : ?>
 
                                 <tr>
-                                    <td colspan="4" class="text-center">
-                                        Data terbaru belum tersedia.
+
+                                    <td>
+                                        <?= $index + 1; ?>
                                     </td>
+
+                                    <td>
+                                        <div class="table-content-flex">
+
+                                            <?php if (!empty($data['gambar'])) : ?>
+
+                                                <img
+                                                    src="<?= htmlspecialchars($data['folder_upload'] . $data['gambar']); ?>"
+                                                    alt="<?= htmlspecialchars($data['konten']); ?>"
+                                                    class="admin-thumb">
+
+                                            <?php else : ?>
+
+                                                <div class="table-image-placeholder">
+                                                    <i class="bi bi-image"></i>
+                                                </div>
+
+                                            <?php endif; ?>
+
+                                            <span>
+                                                <?= htmlspecialchars($data['konten']); ?>
+                                            </span>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($data['kategori']); ?>
+                                    </td>
+
+                                    <td>
+                                        <div class="table-action">
+
+                                            <a
+                                                href="<?= htmlspecialchars($data['edit_link'] . $data['id']); ?>"
+                                                class="btn-table-action">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <a
+                                                href="<?= htmlspecialchars($data['hapus_link'] . $data['id']); ?>"
+                                                class="btn-table-action"
+                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
                                 </tr>
 
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            <?php endforeach; ?>
+
+                        <?php else : ?>
+
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Data terbaru belum tersedia.
+                                </td>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </tbody>
+
+                </table>
 
             </div>
 
         </div>
 
-        <div class="admin-bottom">
-            © 2026 Tenun Ikat Sumba Barat. All Rights Reserved.
-        </div>
+    </section>
 
-    </main>
+    <div class="admin-bottom">
+        © 2026 Tenun Ikat Sumba Barat. All Rights Reserved.
+    </div>
 
-</div>
+</main>
 
 <?php include "includes/footer.php"; ?>

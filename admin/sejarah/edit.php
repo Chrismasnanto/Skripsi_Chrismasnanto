@@ -4,71 +4,24 @@ include "../../config/database.php";
 include "../includes/header.php";
 include "../includes/sidebar.php";
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$query = mysqli_query($conn, "SELECT * FROM sejarah WHERE id_sejarah='$id'");
-$data = mysqli_fetch_assoc($query);
+/** @var mysqli $conn */
 
-if (!$data) {
-    echo "<script>
-            alert('Data sejarah tidak ditemukan');
-            window.location='index.php';
-          </script>";
-    exit;
-}
+$query = mysqli_query($conn, "SELECT * FROM sejarah ORDER BY id_sejarah DESC");
+$total_data = mysqli_num_rows($query);
 
-if (isset($_POST['update'])) {
-    $id_admin = $_SESSION['admin'];
-
-    $judul = mysqli_real_escape_string($conn, $_POST['judul']);
-    $isi = mysqli_real_escape_string($conn, $_POST['isi']);
-
-    $gambar = $data['gambar'];
-
-    if (!empty($_FILES['gambar']['name'])) {
-        $nama_gambar = $_FILES['gambar']['name'];
-        $tmp_gambar = $_FILES['gambar']['tmp_name'];
-        $ekstensi = strtolower(pathinfo($nama_gambar, PATHINFO_EXTENSION));
-
-        $nama_baru = time() . "_" . uniqid() . "." . $ekstensi;
-        $folder_upload = "../../uploads/sejarah/";
-
-        if (!is_dir($folder_upload)) {
-            mkdir($folder_upload, 0777, true);
-        }
-
-        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
-
-        if (in_array($ekstensi, $allowed)) {
-            if (!empty($data['gambar']) && file_exists($folder_upload . $data['gambar'])) {
-                unlink($folder_upload . $data['gambar']);
-            }
-
-            move_uploaded_file($tmp_gambar, $folder_upload . $nama_baru);
-            $gambar = $nama_baru;
-        } else {
-            echo "<script>
-                    alert('Format gambar harus JPG, JPEG, PNG, atau WEBP');
-                  </script>";
-        }
-    }
-
-    $update = mysqli_query($conn, "UPDATE sejarah SET
-                                    id_admin='$id_admin',
-                                    judul='$judul',
-                                    isi='$isi',
-                                    gambar='$gambar'
-                                  WHERE id_sejarah='$id'");
-
-    if ($update) {
-        echo "<script>
-                alert('Data sejarah berhasil diperbarui');
-                window.location='index.php';
-              </script>";
+function namaKategori($kategori)
+{
+    if ($kategori == 'hero') {
+        return 'Hero';
+    } elseif ($kategori == 'asal_usul') {
+        return 'Asal Usul';
+    } elseif ($kategori == 'peran') {
+        return 'Peran Tenun';
+    } elseif ($kategori == 'warisan') {
+        return 'Warisan';
     } else {
-        echo "<script>
-                alert('Data sejarah gagal diperbarui');
-              </script>";
+        return '-';
     }
 }
 ?>
@@ -90,64 +43,106 @@ if (isset($_POST['update'])) {
 
     <section class="admin-content">
 
-        <h1>Edit Sejarah</h1>
+        <h1>Sejarah</h1>
 
         <div class="admin-data-box">
 
             <div class="admin-data-header">
-                <h2>Form Edit Konten Sejarah</h2>
+                <h2>Daftar Konten Sejarah</h2>
 
-                <a href="index.php" class="btn-add-admin">
-                    <i class="bi bi-arrow-left"></i>
-                    Kembali
+                <a href="tambah.php" class="btn-add-admin">
+                    <i class="bi bi-plus-lg"></i>
+                    Tambah Konten
                 </a>
             </div>
 
-            <form action="" method="POST" enctype="multipart/form-data" class="admin-form">
+            <div class="table-responsive">
 
-                <div class="form-admin-group">
-                    <label>Judul</label>
-                    <input type="text"
-                           name="judul"
-                           value="<?= htmlspecialchars($data['judul']); ?>"
-                           required>
-                </div>
+                <table class="admin-table">
 
-                <div class="form-admin-group">
-                    <label>Isi</label>
-                    <textarea name="isi"
-                              rows="8"
-                              required><?= htmlspecialchars($data['isi']); ?></textarea>
-                </div>
+                    <thead>
+                        <tr>
+                            <th>Gambar</th>
+                            <th>Kategori</th>
+                            <th>Judul</th>
+                            <th>Deskripsi Singkat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
 
-                <div class="form-admin-group">
-                    <label>Gambar Saat Ini</label>
+                    <tbody>
 
-                    <?php if (!empty($data['gambar'])) : ?>
-                        <img src="/uploads/sejarah/<?= htmlspecialchars($data['gambar']); ?>"
-                             alt="<?= htmlspecialchars($data['judul']); ?>"
-                             class="admin-preview-img">
-                    <?php else : ?>
-                        <p>Belum ada gambar.</p>
-                    <?php endif; ?>
-                </div>
+                        <?php if ($total_data > 0) : ?>
 
-                <div class="form-admin-group">
-                    <label>Ganti Gambar</label>
-                    <input type="file" name="gambar" accept="image/*">
-                </div>
+                            <?php while ($row = mysqli_fetch_assoc($query)) : ?>
 
-                <div class="form-admin-action">
-                    <button type="submit" name="update" class="btn-submit-admin">
-                        Update
-                    </button>
+                                <tr>
 
-                    <a href="index.php" class="btn-cancel-admin">
-                        Batal
-                    </a>
-                </div>
+                                    <td>
+                                        <?php if (!empty($row['gambar'])) : ?>
+                                            <img
+                                                src="/uploads/sejarah/<?= htmlspecialchars($row['gambar']); ?>"
+                                                alt="<?= htmlspecialchars($row['judul']); ?>"
+                                                class="admin-thumb">
+                                        <?php else : ?>
+                                            <div class="table-image-placeholder">
+                                                <i class="bi bi-image"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
 
-            </form>
+                                    <td>
+                                        <?= namaKategori($row['kategori']); ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($row['judul']); ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars(substr(strip_tags($row['isi']), 0, 120)); ?>...
+                                    </td>
+
+                                    <td>
+                                        <div class="action-buttons">
+
+                                            <a href="edit.php?id=<?= $row['id_sejarah']; ?>" class="btn-action">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <a
+                                                href="hapus.php?id=<?= $row['id_sejarah']; ?>"
+                                                class="btn-action"
+                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            <?php endwhile; ?>
+
+                        <?php else : ?>
+
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    Data sejarah belum tersedia.
+                                </td>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <p class="data-count">
+                Menampilkan <?= $total_data; ?> data
+            </p>
 
         </div>
 

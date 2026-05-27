@@ -3,6 +3,9 @@ include "../config/database.php";
 include "../includes/header.php";
 include "../includes/navbar.php";
 
+
+/** @var mysqli $conn */
+
 /* AMBIL DATA TUJUAN WEBSITE */
 $queryTujuan = mysqli_query($conn, "SELECT * FROM about WHERE judul='Tujuan Website' LIMIT 1");
 $tujuan = mysqli_fetch_assoc($queryTujuan);

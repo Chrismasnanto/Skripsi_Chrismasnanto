@@ -4,6 +4,8 @@ include "../../config/database.php";
 include "../includes/header.php";
 include "../includes/sidebar.php";
 
+/** @var mysqli $conn */
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 $query = mysqli_query($conn, "SELECT * FROM motif_makna WHERE id_motif='$id'");

@@ -3,6 +3,9 @@ include "../config/database.php";
 include "../includes/header.php";
 include "../includes/navbar.php";
 
+
+/** @var mysqli $conn */
+
 $queryMotif = mysqli_query($conn, "SELECT * FROM motif_makna ORDER BY id_motif ASC");
 $totalMotif = mysqli_num_rows($queryMotif);
 ?>

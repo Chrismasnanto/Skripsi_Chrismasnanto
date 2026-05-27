@@ -4,6 +4,8 @@ include "../../config/database.php";
 
 $id = $_GET['id'];
 
+/** @var mysqli $conn */
+
 $query = mysqli_query($conn, "SELECT * FROM sejarah WHERE id_sejarah='$id'");
 $data = mysqli_fetch_assoc($query);
 

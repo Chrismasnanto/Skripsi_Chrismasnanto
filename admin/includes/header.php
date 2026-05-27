@@ -3,11 +3,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 if (!isset($_SESSION['admin'])) {
     header("Location: /admin/login.php");
     exit;
 }
+
+$nama_admin = $_SESSION['admin'] ?? 'Administrator';
 ?>
 
 <!DOCTYPE html>
@@ -16,8 +17,10 @@ if (!isset($_SESSION['admin'])) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel - Tenun Ikat Sumba Barat</title>
+
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/logo/favicon.png">
-<link rel="shortcut icon" href="/assets/img/logo/favicon.png">
+    <link rel="shortcut icon" href="/assets/img/logo/favicon.png">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -28,4 +31,4 @@ if (!isset($_SESSION['admin'])) {
 
 <body>
 
-<div class="admin-wrapper">
+    <div class="admin-wrapper">
