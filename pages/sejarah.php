@@ -11,7 +11,7 @@ include "../includes/navbar.php";
 */
 $queryHero = mysqli_query($conn, "SELECT * FROM sejarah 
                                   WHERE kategori = 'hero'
-                                  ORDER BY id_sejarah ASC");
+                                  ORDER BY id_sejarah DESC");
 $hero = mysqli_fetch_assoc($queryHero);
 
 $hero_judul = $hero ? $hero['judul'] : 'Sejarah Tenun Ikat Sumba Barat';

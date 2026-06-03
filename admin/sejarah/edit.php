@@ -1,29 +1,90 @@
 <?php
-include "../auth/session.php";
-include "../../config/database.php";
-include "../includes/header.php";
-include "../includes/sidebar.php";
+include __DIR__ . "/../auth/session.php";
+include __DIR__ . "/../../config/database.php";
 
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-/** @var mysqli $conn */
+$query = mysqli_query($conn, "SELECT * FROM sejarah WHERE id_sejarah='$id'");
+$data = mysqli_fetch_assoc($query);
 
-$query = mysqli_query($conn, "SELECT * FROM sejarah ORDER BY id_sejarah DESC");
-$total_data = mysqli_num_rows($query);
+if (!$data) {
+    echo "<script>
+            alert('Data sejarah tidak ditemukan');
+            window.location='index.php';
+          </script>";
+    exit;
+}
 
-function namaKategori($kategori)
-{
-    if ($kategori == 'hero') {
-        return 'Hero';
-    } elseif ($kategori == 'asal_usul') {
-        return 'Asal Usul';
-    } elseif ($kategori == 'peran') {
-        return 'Peran Tenun';
-    } elseif ($kategori == 'warisan') {
-        return 'Warisan';
+if (isset($_POST['update'])) {
+
+    $id_admin = $_SESSION['admin'];
+
+    $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
+    $judul    = mysqli_real_escape_string($conn, $_POST['judul']);
+    $isi      = mysqli_real_escape_string($conn, $_POST['isi']);
+
+    $gambar = $data['gambar'];
+
+    if (!empty($_FILES['gambar']['name'])) {
+
+        $nama_gambar = $_FILES['gambar']['name'];
+        $tmp_gambar  = $_FILES['gambar']['tmp_name'];
+
+        $ekstensi = strtolower(pathinfo($nama_gambar, PATHINFO_EXTENSION));
+
+        $nama_baru = time() . "_" . uniqid() . "." . $ekstensi;
+
+        $folder_upload = "../../uploads/sejarah/";
+
+        if (!is_dir($folder_upload)) {
+            mkdir($folder_upload, 0777, true);
+        }
+
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (in_array($ekstensi, $allowed)) {
+
+            if (!empty($data['gambar']) && file_exists($folder_upload . $data['gambar'])) {
+                unlink($folder_upload . $data['gambar']);
+            }
+
+            move_uploaded_file($tmp_gambar, $folder_upload . $nama_baru);
+
+            $gambar = $nama_baru;
+
+        } else {
+
+            echo "<script>
+                    alert('Format gambar harus JPG, JPEG, PNG, atau WEBP');
+                  </script>";
+        }
+    }
+
+    $update = mysqli_query($conn, "UPDATE sejarah SET
+                                    id_admin='$id_admin',
+                                    kategori='$kategori',
+                                    judul='$judul',
+                                    isi='$isi',
+                                    gambar='$gambar'
+                                  WHERE id_sejarah='$id'");
+
+    if ($update) {
+
+        echo "<script>
+                alert('Data sejarah berhasil diperbarui');
+                window.location='index.php';
+              </script>";
+
     } else {
-        return '-';
+
+        echo "<script>
+                alert('Data sejarah gagal diperbarui');
+              </script>";
     }
 }
+
+include __DIR__ . "/../includes/header.php";
+include __DIR__ . "/../includes/sidebar.php";
 ?>
 
 <main class="admin-main">
@@ -43,106 +104,116 @@ function namaKategori($kategori)
 
     <section class="admin-content">
 
-        <h1>Sejarah</h1>
+        <h1>Edit Sejarah</h1>
 
         <div class="admin-data-box">
 
             <div class="admin-data-header">
-                <h2>Daftar Konten Sejarah</h2>
 
-                <a href="tambah.php" class="btn-add-admin">
-                    <i class="bi bi-plus-lg"></i>
-                    Tambah Konten
+                <h2>Form Edit Sejarah</h2>
+
+                <a href="index.php" class="btn-add-admin">
+                    <i class="bi bi-arrow-left"></i>
+                    Kembali
                 </a>
-            </div>
-
-            <div class="table-responsive">
-
-                <table class="admin-table">
-
-                    <thead>
-                        <tr>
-                            <th>Gambar</th>
-                            <th>Kategori</th>
-                            <th>Judul</th>
-                            <th>Deskripsi Singkat</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        <?php if ($total_data > 0) : ?>
-
-                            <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-
-                                <tr>
-
-                                    <td>
-                                        <?php if (!empty($row['gambar'])) : ?>
-                                            <img
-                                                src="/uploads/sejarah/<?= htmlspecialchars($row['gambar']); ?>"
-                                                alt="<?= htmlspecialchars($row['judul']); ?>"
-                                                class="admin-thumb">
-                                        <?php else : ?>
-                                            <div class="table-image-placeholder">
-                                                <i class="bi bi-image"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                    </td>
-
-                                    <td>
-                                        <?= namaKategori($row['kategori']); ?>
-                                    </td>
-
-                                    <td>
-                                        <?= htmlspecialchars($row['judul']); ?>
-                                    </td>
-
-                                    <td>
-                                        <?= htmlspecialchars(substr(strip_tags($row['isi']), 0, 120)); ?>...
-                                    </td>
-
-                                    <td>
-                                        <div class="action-buttons">
-
-                                            <a href="edit.php?id=<?= $row['id_sejarah']; ?>" class="btn-action">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-
-                                            <a
-                                                href="hapus.php?id=<?= $row['id_sejarah']; ?>"
-                                                class="btn-action"
-                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-                            <?php endwhile; ?>
-
-                        <?php else : ?>
-
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    Data sejarah belum tersedia.
-                                </td>
-                            </tr>
-
-                        <?php endif; ?>
-
-                    </tbody>
-
-                </table>
 
             </div>
 
-            <p class="data-count">
-                Menampilkan <?= $total_data; ?> data
-            </p>
+            <form action="" method="POST" enctype="multipart/form-data" class="admin-form">
+
+                <div class="form-admin-group">
+                    <label>Kategori</label>
+
+                    <select name="kategori" required>
+
+                        <option value="hero"
+                            <?= ($data['kategori'] == 'hero') ? 'selected' : ''; ?>>
+                            Hero
+                        </option>
+
+                        <option value="asal_usul"
+                            <?= ($data['kategori'] == 'asal_usul') ? 'selected' : ''; ?>>
+                            Asal Usul
+                        </option>
+
+                        <option value="peran"
+                            <?= ($data['kategori'] == 'peran') ? 'selected' : ''; ?>>
+                            Peran Tenun
+                        </option>
+
+                        <option value="warisan"
+                            <?= ($data['kategori'] == 'warisan') ? 'selected' : ''; ?>>
+                            Warisan
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="form-admin-group">
+
+                    <label>Judul</label>
+
+                    <input type="text"
+                           name="judul"
+                           value="<?= htmlspecialchars($data['judul']); ?>"
+                           required>
+
+                </div>
+
+                <div class="form-admin-group">
+
+                    <label>Isi</label>
+
+                    <textarea name="isi"
+                              rows="8"
+                              required><?= htmlspecialchars($data['isi']); ?></textarea>
+
+                </div>
+
+                <div class="form-admin-group">
+
+                    <label>Gambar Saat Ini</label>
+
+                    <?php if (!empty($data['gambar'])) : ?>
+
+                        <img src="/uploads/sejarah/<?= htmlspecialchars($data['gambar']); ?>"
+                             alt="<?= htmlspecialchars($data['judul']); ?>"
+                             class="admin-preview-img">
+
+                    <?php else : ?>
+
+                        <p>Belum ada gambar.</p>
+
+                    <?php endif; ?>
+
+                </div>
+
+                <div class="form-admin-group">
+
+                    <label>Ganti Gambar</label>
+
+                    <input type="file"
+                           name="gambar"
+                           accept="image/*">
+
+                </div>
+
+                <div class="form-admin-action">
+
+                    <button type="submit"
+                            name="update"
+                            class="btn-submit-admin">
+                        Update
+                    </button>
+
+                    <a href="index.php"
+                       class="btn-cancel-admin">
+                        Batal
+                    </a>
+
+                </div>
+
+            </form>
 
         </div>
 
@@ -154,4 +225,4 @@ function namaKategori($kategori)
 
 </main>
 
-<?php include "../includes/footer.php"; ?>
+<?php include __DIR__ . "/../includes/footer.php"; ?>

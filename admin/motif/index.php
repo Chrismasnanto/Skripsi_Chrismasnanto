@@ -7,7 +7,7 @@ include "../includes/sidebar.php";
 
 /** @var mysqli $conn */
 
-$query = mysqli_query($conn, "SELECT * FROM motif_makna ORDER BY id_motif ASC");
+$query = mysqli_query($conn, "SELECT * FROM motif_makna ORDER BY id_motif DESC");
 $total_data = mysqli_num_rows($query);
 ?>
 

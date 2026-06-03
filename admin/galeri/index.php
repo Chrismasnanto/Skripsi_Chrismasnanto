@@ -7,7 +7,7 @@ include "../includes/sidebar.php";
 
 /** @var mysqli $conn */
 
-$query = mysqli_query($conn, "SELECT * FROM galeri ORDER BY id_galeri ASC");
+$query = mysqli_query($conn, "SELECT * FROM galeri ORDER BY id_galeri DESC");
 $total_data = mysqli_num_rows($query);
 ?>
 

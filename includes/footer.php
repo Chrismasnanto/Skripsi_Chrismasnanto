@@ -21,19 +21,19 @@
                 </p>
 
                 <div class="footer-social">
-                    <a href="#" aria-label="Facebook">
+                    <a href="https://www.facebook.com/dinaspariwisatasumbabarat" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <i class="bi bi-facebook"></i>
                     </a>
 
-                    <a href="#" aria-label="Instagram">
+                    <a href="https://www.instagram.com/dinaspariwisata_sumbabarat" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <i class="bi bi-instagram"></i>
                     </a>
 
-                    <a href="#" aria-label="YouTube">
+                    <a href="https://www.youtube.com/@disparsumbabarat" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                         <i class="bi bi-youtube"></i>
                     </a>
 
-                    <a href="#" aria-label="TikTok">
+                    <a href="https://www.tiktok.com/@disparsumbabarat" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                         <i class="bi bi-tiktok"></i>
                     </a>
                 </div>
