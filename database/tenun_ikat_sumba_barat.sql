@@ -1,10 +1,31 @@
- 
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 29, 2026 at 02:01 AM
+-- Server version: 10.6.24-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
- 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tenun_ikat_sumba_barat`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `about`
+--
 
 CREATE TABLE `about` (
   `id_about` int(11) NOT NULL,
@@ -14,7 +35,9 @@ CREATE TABLE `about` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
- 
+--
+-- Dumping data for table `about`
+--
 
 INSERT INTO `about` (`id_about`, `id_admin`, `judul`, `isi`, `created_at`) VALUES
 (2, 1, 'Tujuan Website', 'Website ini merupakan media informasi budaya yang menyajikan informasi mengenai sejarah, motif dan makna, proses pembuatan, serta galeri Tenun Ikat Sumba Barat.\r\n\r\nInformasi yang disediakan bertujuan untuk membantu masyarakat mengenal, memahami, dan menghargai warisan budaya Tenun Ikat Sumba Barat.', '2026-05-23 01:16:41'),
@@ -22,7 +45,9 @@ INSERT INTO `about` (`id_about`, `id_admin`, `judul`, `isi`, `created_at`) VALUE
 
 -- --------------------------------------------------------
 
- 
+--
+-- Table structure for table `admin`
+--
 
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
@@ -31,12 +56,19 @@ CREATE TABLE `admin` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
- 
+--
+-- Dumping data for table `admin`
+--
 
 INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`) VALUES
-(1, 'dimas', 'dimss', 'admin123');
+(1, 'dimss', 'admin', 'admin123'),
+(2, 'Cledwin', 'Cledwin', '123456');
 
- 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beranda`
+--
 
 CREATE TABLE `beranda` (
   `id_beranda` int(11) NOT NULL,
@@ -99,6 +131,10 @@ CREATE TABLE `motif_makna` (
   `nama_motif` varchar(255) NOT NULL,
   `asal_daerah` varchar(255) NOT NULL,
   `makna` text NOT NULL,
+  `ciri_motif` text DEFAULT NULL,
+  `warna_dominan` varchar(100) DEFAULT NULL,
+  `filosofi_visual` text DEFAULT NULL,
+  `penggunaan` text DEFAULT NULL,
   `gambar` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -107,39 +143,15 @@ CREATE TABLE `motif_makna` (
 -- Dumping data for table `motif_makna`
 --
 
-INSERT INTO `motif_makna` (`id_motif`, `id_admin`, `nama_motif`, `asal_daerah`, `makna`, `gambar`, `created_at`) VALUES
-(2, 1, 'Motif Mamuli', 'Loli', 'Melambangkan kesuburan, kehidupan, dan penghormatan terhadap perempuan.', '1779376539_WhatsApp Image 2026-01-02 at 19.12.15.jpeg', '2026-05-20 21:50:07'),
-(4, 1, 'Motif Garis Lurus Panggiling Wanokaka', 'Wanokaka', 'Motif garis lurus pada bagian pinggir kain yang melambangkan ketulusan hati masyarakat Wanokaka dalam kehidupan sehari-hari. ', '1779569982_6a12153ef2844.png', '2026-05-23 15:43:57'),
-(5, 1, 'Motif Bunga Lambaleko Lamboya ', 'Lamboya', 'Motif bunga pada bagian pinggir kain. Motif tersebut merupakan hasil kreativitas penenun dalam mengembangkan jenis kain Lambaleko menggunakan bahan dasar benang pabrikan (benang Yamalon)', '1779568745_6a121069891ea.png', '2026-05-23 15:43:57'),
-(6, 1, 'Panggiling Lamboya', 'Lamboya', 'Motif garis tersebut melambangkan garis keturunan bangsawan. Kain Panggiling dibuat dari kapas asli dan digunakan pada acara adat tertentu seperti perkawinan, pesta adat, dan acara kematian.', '1779570090_6a1215aabfc4d.png', '2026-05-23 15:43:57'),
-(7, 1, 'Motif Bungu kain Ikat Loli', 'Loli', 'Motif bunga yang merupakan hasil pengembangan kreativitas penenun. Motif bunga yang melambangkan ikatan persaudaraan, ', '1779570198_6a12161685d2a.png', '2026-05-23 15:43:57'),
-(8, 1, 'Motif Timbul Mamuli Lambaleko Loli', 'Loli', 'Motif mamuli melambangkan rahim wanita sebagai simbol kejayaan perempuan. Dalam satu jenis kain terdapat motif yang disusun secara berulang sebagai ciri khas kain Lambaleko Loli.', '1779555527_6a11dcc7ed07a.png', '2026-05-23 15:43:57'),
-(12, 1, 'Motif Pasola', 'Wanokaka', 'Motif Pasola menggambarkan tradisi adat tahunan masyarakat Sumba Barat yang dilaksanakan setiap bulan Maret.', '1779570028_6a12156c652d6.png', '2026-05-23 19:50:20'),
-(13, 1, 'Motif Kuda', 'Loli', 'Melambangkan kepemimpinan, kejantanan, dan status sosial yang tinggi di masyarakat Sumba.', '1779572907_6a1220ab601bc.png', '2026-05-23 21:48:27');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `peran_tenun`
---
-
-CREATE TABLE `peran_tenun` (
-  `id_peran` int(11) NOT NULL,
-  `id_admin` int(11) DEFAULT NULL,
-  `judul` varchar(255) NOT NULL,
-  `isi` text NOT NULL,
-  `gambar` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `peran_tenun`
---
-
-INSERT INTO `peran_tenun` (`id_peran`, `id_admin`, `judul`, `isi`, `gambar`, `created_at`) VALUES
-(1, 1, 'Kelahiran', 'Digunakan dalam ritual kelahiran sebagai simbol doa dan harapan bagi bayi yang lahir.', '1779587753_6a125aa9d18f9.png', '2026-05-23 04:10:14'),
-(2, 1, 'Pernikahan', 'Menjadi bagian penting dalam upacara pernikahan sebagai simbol ikatan dan kebersamaan.', '1779587070_6a1257fe2b2ac.png', '2026-05-23 04:10:14'),
-(3, 1, 'Upacara Adat', 'Digunakan dalam berbagai upacara adat sebagai bentuk penghormatan kepada leluhur dan tradisi.', '1779581539_6a124263805c2.png', '2026-05-23 04:10:14');
+INSERT INTO `motif_makna` (`id_motif`, `id_admin`, `nama_motif`, `asal_daerah`, `makna`, `ciri_motif`, `warna_dominan`, `filosofi_visual`, `penggunaan`, `gambar`, `created_at`) VALUES
+(2, 2, 'Motif Mamuli', 'Loli', 'Melambangkan kesuburan, kehidupan, dan penghormatan terhadap perempuan.', 'Bentuk menyerupai lambang omega atau rahim perempuan\r\nPada bagian bawah sering dihiasi sepasang figur hewan seperti ayam atau lambang prajurit\r\nMemiliki detail ukiran tenun halus di bagian tengah ornamentasi utama', 'Biru, Kuning, Putih', 'Bentuk dasarnya merepresentasikan organ reproduksi wanita yang sakral, melambangkan asal-mula kemampuan memberi kehidupan baru, kemakmuran, serta perlindungan garis keturunan keluarga.', 'Upacara Perkawinan Adat (sebagai bagian dari mahar/belis), Ritual Adat Keagamaan, Busana Kehormatan Bangsawan', '1779376539_WhatsApp Image 2026-01-02 at 19.12.15.jpeg', '2026-05-20 21:50:07'),
+(4, 2, 'Motif Garis Lurus Panggiling Wanokaka', 'Wanokaka', 'Motif garis lurus pada bagian pinggir kain yang melambangkan ketulusan hati masyarakat Wanokaka dalam kehidupan sehari-hari. ', 'Pola ornamen berbentuk bunga khas yang tersusun di sepanjang pinggiran kain\r\nMenggunakan teknik pewarnaan dan penenunan yang halus dan mendetail\r\nMemanfaatkan perpaduan bahan dasar benang pabrikan berkualitas (seperti benang Yamalon) untuk menghasilkan tekstur kain yang khas', 'Cream, Kuning, Merah', 'Struktur motif bunga Lambaleko mencerminkan harmonisasi kehidupan masyarakat Sumba Barat dengan alam semesta, di mana keindahan visual berpadu dengan ketekunan, ketepatan, serta kedisiplinan dalam proses penciptaan karya seni tenun.', 'Busana Adat Sehari-hari, Acara Pertemuan Keluarga, Upacara Adat Lokal, Kerajinan Tangan Khas Sumba', '1779569982_6a12153ef2844.png', '2026-05-23 15:43:57'),
+(5, 2, 'Motif Bunga Lambaleko Lamboya ', 'Lamboya', 'Motif bunga pada bagian pinggir kain. Motif tersebut merupakan hasil kreativitas penenun dalam mengembangkan jenis kain Lambaleko menggunakan bahan dasar benang pabrikan (benang Yamalon)', 'Pola ornamen berbentuk bunga khas yang tersusun di sepanjang pinggiran kain\r\nMenggunakan teknik pewarnaan dan penenunan yang halus dan mendetail\r\nMemanfaatkan perpaduan bahan dasar benang pabrikan berkualitas (seperti benang Yamalon) untuk menghasilkan tekstur kain yang khas', 'Hitam, Putih, Merah', 'Struktur motif bunga Lambaleko mencerminkan harmonisasi kehidupan masyarakat Sumba Barat dengan alam semesta, di mana keindahan visual berpadu dengan ketekunan, ketepatan, serta kedisiplinan dalam proses penciptaan karya seni tenun.', 'Busana Adat Sehari-hari, Acara Pertemuan Keluarga, Upacara Adat Lokal, Kerajinan Tangan Khas Sumba', '1779568745_6a121069891ea.png', '2026-05-23 15:43:57'),
+(6, 2, 'Motif Garis Panggiling Lamboya', 'Lamboya', 'Motif garis tersebut melambangkan garis keturunan bangsawan. Kain Panggiling dibuat dari kapas asli dan digunakan pada acara adat tertentu seperti perkawinan, pesta adat, dan acara kematian.', 'Garis vertikal yang memanjang\r\nSusunan simetris dan beraturan\r\nMotif geometris sederhana namun tegas\r\nMelambangkan keteraturan dan keseimbangan hidup', 'Merah, Cream, Hitam, Putih', 'Garis lurus melambangkan perjalanan hidup manusia yang harus dijalani dengan ketulusan, keberanian, dan keseimbangan.', 'Upacara Adat, Pernikahan, Penyambutan Tamu, Acara Budaya', '1779570090_6a1215aabfc4d.png', '2026-05-23 15:43:57'),
+(7, 2, 'Motif Bungu kain Ikat Loli', 'Loli', 'Motif bunga yang merupakan hasil pengembangan kreativitas penenun. Motif bunga yang melambangkan ikatan persaudaraan, ', 'Pola bunga geometris yang berulang secara horizontal dan vertikal di sepanjang badan kain\r\nFormasi barisan motif yang simetris dan berjejer rapi\r\nMemiliki aksen garis-garis putih tipis sebagai pembatas antar kelompok motif', 'Merah, Putih', 'Pengulangan motif bunga yang saling terhubung satu sama lain melambangkan bahwa setiap individu dalam masyarakat adat Loli tidak dapat berdiri sendiri, melainkan saling menopang dan menguatkan dalam ikatan kekeluargaan yang kokoh.', 'Pakaian Adat kaum Perempuan, Upacara Pertemuan Suku, Upacara Menyambut Tamu, serta Busana Resmi dalam Acara Kebudayaan Sumba Barat', '1779570198_6a12161685d2a.png', '2026-05-23 15:43:57'),
+(8, 2, 'Motif Timbul Mamuli Lambaleko Loli', 'Loli', 'Motif mamuli melambangkan rahim wanita sebagai simbol kejayaan perempuan. Dalam satu jenis kain terdapat motif yang disusun secara berulang sebagai ciri khas kain Lambaleko Loli.', 'Memiliki struktur motif \"timbul\" yang terasa menonjol pada tekstur kain\r\nMenggabungkan lambang Mamuli (bentuk omega) di bagian badan kain dengan kombinasi hiasan bunga Lambaleko di bagian pinggirnya\r\nPola pembungaan dan mamuli ditenun secara berulang dan rapat dengan formasi yang simetris', 'Hijau, Merah, Hitam', 'Perpaduan motif Mamuli yang timbul dengan hiasan Lambaleko mencerminkan keteguhan, kesuburan, dan keanggunan perempuan Loli. Tekstur timbulnya menegaskan karakter yang kuat dan bernilai tinggi dalam tatanan adat.', 'Digunakan sebagai sarung adat perempuan (Kain Hinji) dalam upacara pernikahan besar, ritual adat suku, serta sebagai simbol penghargaan/belis tingkat tinggi dalam tradisi Sumba Barat.', '1779555527_6a11dcc7ed07a.png', '2026-05-23 15:43:57'),
+(12, 2, 'Motif Pasola', 'Wanokaka', 'Motif Pasola menggambarkan tradisi adat tahunan masyarakat Sumba Barat yang dilaksanakan setiap bulan Maret.', 'Memiliki lajur vertikal berwarna biru cerah bermotif abstrak ksatria atau kuda yang khas\r\nPola figuratif geometris yang melambangkan para pemain Pasola yang tangkas\r\nDibatasi oleh garis pembatas vertikal merah dan putih yang tegas di sisi-sisinya', 'Biru, Merah, Putih, Hitam', 'Warna biru melambangkan kedalaman spiritualitas dan langit yang menaungi bumi, sementara pola ksatria menggambarkan keseimbangan antara sportivitas, keberanian, kesatriaan, dan pengorbanan suci dalam menjaga keharmonisan alam sesuai kepercayaan Marapu.', 'Kain Kehormatan Upacara Nyale dan Pasola, Pakaian Adat Ksatria/Pria Sumba, Pajangan Dinding Sakral, serta Busana Resmi Festival Kebudayaan Sumba Barat', '1779570028_6a12156c652d6.png', '2026-05-23 19:50:20'),
+(13, 2, 'Motif Kuda', 'Loli', 'Melambangkan kepemimpinan, kejantanan, dan status sosial yang tinggi di masyarakat Sumba.', 'Menampilkan ornamen figuratif berbentuk hewan kuda yang tegas dan anggun pada lajur kain utama\r\nPola kuda ditenun menggunakan warna kuning keemasan kontras di atas dasar kain tenun bermotif garis halus\r\nMemiliki variasi pembatas lajur vertikal berwarna biru tua serta tepian rumbai berwarna merah tua di bagian bawah kain', 'Biru, Kuning, Merah', 'Visualisasi motif kuda mencerminkan harga diri, kebebasan, serta peran vital kuda dalam budaya Marapu, baik sebagai alat transportasi spiritual, mas kawin (belis), maupun lambang kegagahan seorang pria Sumba.', 'Kain Kebesaran Kepala Suku/Bangsawan, Pakaian Adat Pria dalam Upacara Adat dan Pernikahan, Mahar Pernikahan (Belis) Tingkat Tinggi, serta sebagai Sarung Sakral dalam Ritual Kematian Adat Sumba', '1779572907_6a1220ab601bc.png', '2026-05-23 21:48:27');
 
 -- --------------------------------------------------------
 
@@ -174,22 +186,27 @@ INSERT INTO `proses_pembuatan` (`id_proses`, `id_admin`, `judul`, `isi`, `gambar
 -- Table structure for table `sejarah`
 --
 
-CREATE TABLE sejarah (
-    id_sejarah INT AUTO_INCREMENT PRIMARY KEY,
-    id_admin INT,
-    kategori VARCHAR(50) NOT NULL,
-    judul VARCHAR(255) NOT NULL,
-    isi TEXT NOT NULL,
-    gambar VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_admin) REFERENCES admin(id_admin) ON DELETE SET NULL
-);
- 
+CREATE TABLE `sejarah` (
+  `id_sejarah` int(11) NOT NULL,
+  `id_admin` int(11) DEFAULT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `isi` text NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-INSERT INTO `sejarah` (`id_sejarah`, `id_admin`, `judul`, `isi`, `gambar`, `created_at`) VALUES
-(1, 1, 'Asal Usul Tenun Ikat Sumba Barat', 'Tenun Ikat Sumba Barat merupakan warisan budaya yang diwariskan secara turun-temurun. Kain tenun tidak hanya digunakan sebagai pakaian, tetapi juga sebagai simbol status sosial, identitas budaya, dan bagian penting dalam upacara adat.', '1779598095_6a12830faeb4a.png', '2026-05-20 21:50:07'),
-(2, 1, 'Sejarah Tenun Ikat Sumba Barat', 'Tenun Ikat Sumba Barat  memiliki sejarah yang panjang yang berkaitan erat dengan kehidupan masyarakat, adat istiadat, dan nilai budaya yang diwariskan secara turun-temurun', '1779594188_6a1273cc6535f.png', '2026-05-20 21:50:07'),
-(3, 1, 'Warisan yang Terus Dilestarikan', 'Meskipun perkembangan zaman terus berjalan, masyarakat Sumba Barat tetap menjaga dan melestarikan tradisi menenun sebagai bagian dari identitas budaya.\r\n\r\nHingga kini, tenun ikat Sumba Barat terus hidup dan dikenalkan kepada generasi muda agar tidak hilang oleh waktu.', '1779597840_6a128210a0460.png', '2026-05-23 04:45:44');
+--
+-- Dumping data for table `sejarah`
+--
+
+INSERT INTO `sejarah` (`id_sejarah`, `id_admin`, `kategori`, `judul`, `isi`, `gambar`, `created_at`) VALUES
+(1, 1, 'asal_usul', 'Asal Usul Tenun Ikat Sumba Barat', 'Tenun Ikat Sumba Barat merupakan warisan budaya yang diwariskan secara turun-temurun. Kain tenun tidak hanya digunakan sebagai pakaian, tetapi juga sebagai simbol status sosial, identitas budaya, dan bagian penting dalam upacara adat.', '1779598095_6a12830faeb4a.png', '2026-05-20 21:50:07'),
+(2, 1, 'hero', 'Sejarah Tenun Ikat Sumba Barat', 'Tenun Ikat Sumba Barat  memiliki sejarah yang panjang yang berkaitan erat dengan kehidupan masyarakat, adat istiadat, dan nilai budaya yang diwariskan secara turun-temurun', '1779594188_6a1273cc6535f.png', '2026-05-20 21:50:07'),
+(3, 1, 'warisan', 'Warisan yang Terus Dilestarikan', 'Meskipun perkembangan zaman terus berjalan, masyarakat Sumba Barat tetap menjaga dan melestarikan tradisi menenun sebagai bagian dari identitas budaya.\r\n\r\nHingga kini, tenun ikat Sumba Barat terus hidup dan dikenalkan kepada generasi muda agar tidak hilang oleh waktu.', '1779597840_6a128210a0460.png', '2026-05-23 04:45:44'),
+(8, 1, 'peran', 'Kelahiran', 'Digunakan dalam ritual kelahiran sebagai simbol doa dan harapan bagi bayi yang lahir.\r\n', '1779852263_6a1663e7506ab.png', '2026-05-27 03:24:23'),
+(9, 1, 'peran', 'Pernikahan', 'Menjadi bagian penting dalam upacara pernikahan sebagai simbol ikatan dan kebersamaan.\r\n', '1779852292_6a166404edb67.png', '2026-05-27 03:24:52'),
+(20, 2, 'peran', 'Upacara Adat', 'Digunakan dalam berbagai upacara adat sebagai bentuk penghormatan kepada leluhur dan tradisi.', '1779866088_6a1699e89093c.png', '2026-05-27 07:14:48');
 
 --
 -- Indexes for dumped tables
@@ -232,13 +249,6 @@ ALTER TABLE `motif_makna`
   ADD KEY `id_admin` (`id_admin`);
 
 --
--- Indexes for table `peran_tenun`
---
-ALTER TABLE `peran_tenun`
-  ADD PRIMARY KEY (`id_peran`),
-  ADD KEY `id_admin` (`id_admin`);
-
---
 -- Indexes for table `proses_pembuatan`
 --
 ALTER TABLE `proses_pembuatan`
@@ -266,7 +276,7 @@ ALTER TABLE `about`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `beranda`
@@ -278,31 +288,25 @@ ALTER TABLE `beranda`
 -- AUTO_INCREMENT for table `galeri`
 --
 ALTER TABLE `galeri`
-  MODIFY `id_galeri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_galeri` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `motif_makna`
 --
 ALTER TABLE `motif_makna`
-  MODIFY `id_motif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `peran_tenun`
---
-ALTER TABLE `peran_tenun`
-  MODIFY `id_peran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_motif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `proses_pembuatan`
 --
 ALTER TABLE `proses_pembuatan`
-  MODIFY `id_proses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_proses` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `sejarah`
 --
 ALTER TABLE `sejarah`
-  MODIFY `id_sejarah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_sejarah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
@@ -331,12 +335,6 @@ ALTER TABLE `galeri`
 --
 ALTER TABLE `motif_makna`
   ADD CONSTRAINT `motif_makna_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE SET NULL;
-
---
--- Constraints for table `peran_tenun`
---
-ALTER TABLE `peran_tenun`
-  ADD CONSTRAINT `peran_tenun_ibfk_1` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `proses_pembuatan`

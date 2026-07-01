@@ -51,6 +51,56 @@ $gambar = ($data && !empty($data['gambar']))
     </div>
 </section>
 
+<!-- IDENTITAS BUDAYA SUMBA BARAT -->
+<section class="home-identity">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-label">
+                IDENTITAS BUDAYA
+            </span>
+            <h2 class="section-title">
+                Kekayaan Budaya Sumba Barat
+            </h2>
+            <p class="section-subtitle">
+                Tenun Ikat Sumba Barat merupakan bagian dari identitas masyarakat yang
+                tidak dapat dipisahkan dari tradisi, adat istiadat, dan kehidupan sosial
+                budaya yang diwariskan secara turun-temurun.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="identity-card">
+                    <img src="/assets/img/beranda/RumahAdat1.png" class="identity-image">
+                    <h4>Rumah Adat</h4>
+                    <p>
+                        Simbol persatuan keluarga dan pusat kehidupan masyarakat adat
+                        Sumba Barat.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="identity-card">
+                    <img src="/assets/img/beranda/TradisiPasola.png" class="identity-image">
+                    <h4>Tradisi Pasola</h4>
+                    <p>
+                        Tradisi perang berkuda yang menjadi ikon budaya dan daya tarik
+                        wisata Sumba Barat.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="identity-card">
+                    <img src="/assets/img/beranda/Mamuli.png" class="identity-image">
+                    <h4>Mamuli</h4>
+                    <p>
+                        Simbol kesuburan, kehidupan, dan penghormatan terhadap perempuan
+                        dalam budaya Sumba Barat.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- PENGENALAN TENUN IKAT -->
 <section class="home-about">
