@@ -1,0 +1,1103 @@
+/* ===============================
+   ADMIN GLOBAL
+================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f7f7f7;
+    color: #111;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* ===============================
+   LOGIN ADMIN
+================================ */
+
+.login-page {
+    min-height: 100vh;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 48px 58px 42px;
+    text-align: center;
+}
+
+.login-logo {
+    width: 86px;
+    height: 86px;
+    margin: 0 auto 28px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-logo img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.login-card h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: #222;
+}
+
+.login-card p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 34px;
+}
+
+.login-error {
+    background: #ffecec;
+    color: #8b1e1e;
+    border: 1px solid #e7b2b2;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.form-group {
+    height: 54px;
+    border: 1px solid #d6d6d6;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 20px;
+    margin-bottom: 22px;
+    background: #fff;
+}
+
+.form-group i {
+    font-size: 22px;
+    color: #888;
+}
+
+.form-group input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    background: transparent;
+    color: #222;
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.login-card button {
+    width: 100%;
+    height: 56px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.login-card button:hover {
+    background: #111;
+}
+
+.login-copyright {
+    margin-top: 34px;
+    font-size: 14px;
+    color: #555;
+}
+
+
+/* ===============================
+   ADMIN LAYOUT
+================================ */
+
+.admin-layout,
+.admin-wrapper {
+    min-height: 100vh;
+    display: flex;
+    background: #f7f7f7;
+}
+
+.admin-sidebar,
+.sidebar {
+    width: 280px;
+    min-height: 100vh;
+    background: #fff;
+    border-right: 1px solid #d8d8d8;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.admin-main,
+.main-content,
+.content-wrapper {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ===============================
+   SIDEBAR
+================================ */
+
+.sidebar-brand,
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 34px 26px 24px;
+}
+
+.sidebar-brand img,
+.admin-brand img,
+.admin-logo,
+.logo-admin {
+    width: 66px;
+    height: 66px;
+    max-width: 66px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+    border: 1px solid #d8d8d8;
+}
+
+.sidebar-brand h5,
+.admin-brand h4,
+.sidebar-brand h4 {
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+    margin: 0 0 8px;
+    color: #111;
+    text-transform: uppercase;
+}
+
+.sidebar-brand p,
+.admin-brand p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* Menghilangkan tulisan Admin Panel ganda jika ada */
+.sidebar-brand p + p,
+.admin-brand p + p {
+    display: none;
+}
+
+.sidebar-menu,
+.admin-menu {
+    padding: 48px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-menu a,
+.admin-menu a {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 18px;
+    border-radius: 6px;
+    color: #111;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.sidebar-menu a i,
+.admin-menu a i {
+    font-size: 20px;
+    width: 22px;
+    text-align: center;
+    color: #111;
+}
+
+.sidebar-menu a span,
+.admin-menu a span {
+    color: #111;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active,
+.admin-menu a:hover,
+.admin-menu a.active {
+    background: #eeeeee;
+    color: #111;
+}
+
+.sidebar-logout,
+.admin-logout {
+    margin-top: auto;
+    padding: 24px 26px 34px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.sidebar-logout a,
+.admin-logout a {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #111;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sidebar-logout a i,
+.admin-logout a i {
+    font-size: 22px;
+    width: 22px;
+    text-align: center;
+}
+
+
+/* ===============================
+   ADMIN TOPBAR - FINAL GLOBAL
+================================ */
+
+.admin-main {
+    flex: 1;
+    min-width: 0;
+    background: #f7f7f7;
+}
+
+.admin-topbar {
+    width: 100%;
+    height: 96px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 42px;
+    box-sizing: border-box;
+}
+
+/* Untuk halaman lama: Beranda, Sejarah, Motif, Proses, Galeri, About */
+.topbar-user-simple {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    margin-left: auto;
+}
+
+.topbar-user-simple .user-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border: 1px solid #cfcfcf;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbar-user-simple .user-icon i {
+    font-size: 22px;
+    color: #222;
+}
+
+.topbar-user-simple span {
+    font-size: 17px;
+    font-weight: 600;
+    color: #111;
+    white-space: nowrap;
+}
+
+.topbar-user-simple > i {
+    font-size: 15px;
+    color: #111;
+}
+
+/* Untuk dashboard baru */
+.topbar-account {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-account-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border: 1px solid #cfcfcf;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbar-account-icon i {
+    font-size: 22px;
+    color: #222;
+}
+
+.topbar-account-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #111;
+    white-space: nowrap;
+}
+
+.topbar-account-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.topbar-account-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: #111;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.topbar-account-btn:hover {
+    background: #f2f2f2;
+}
+
+.topbar-account-dropdown {
+    position: absolute;
+    top: 46px;
+    right: 0;
+    width: 250px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+    padding: 12px;
+    display: none;
+    z-index: 99999;
+    text-align: left;
+}
+
+.topbar-account-dropdown.show {
+    display: block;
+}
+
+.account-dropdown-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px 12px;
+}
+
+.account-dropdown-avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-dropdown-avatar i {
+    font-size: 20px;
+    color: #333;
+}
+
+.account-dropdown-profile strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 3px;
+}
+
+.account-dropdown-profile small {
+    display: block;
+    font-size: 13px;
+    color: #777;
+}
+
+.account-dropdown-line {
+    height: 1px;
+    background: #eee;
+    margin: 6px 0;
+}
+
+.topbar-account-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 10px;
+    border-radius: 9px;
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.topbar-account-dropdown a i {
+    font-size: 17px;
+}
+
+.topbar-account-dropdown a:hover {
+    background: #f5f5f5;
+}
+
+/* ===============================
+   ADMIN CONTENT
+================================ */
+
+.admin-content,
+.content {
+    flex: 1;
+    padding: 38px 30px 42px;
+}
+
+.admin-content h1,
+.content h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 34px;
+}
+
+.admin-content h2,
+.content h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111;
+}
+
+
+/* ===============================
+   DASHBOARD SUMMARY CARD
+================================ */
+
+.dashboard-summary,
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 38px;
+}
+
+.summary-card,
+.dashboard-card {
+    min-height: 150px;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.summary-icon,
+.card-icon {
+    width: 62px;
+    height: 62px;
+    border: 1px solid #d8d8d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.summary-icon i,
+.card-icon i {
+    font-size: 28px;
+    color: #555;
+}
+
+.summary-card span,
+.dashboard-card span {
+    display: block;
+    font-size: 14px;
+    color: #111;
+    margin-bottom: 4px;
+}
+
+.summary-card h3,
+.dashboard-card h3 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 4px;
+    color: #111;
+}
+
+.summary-card p,
+.dashboard-card p {
+    font-size: 13px;
+    color: #111;
+    margin: 0;
+}
+
+
+/* ===============================
+   TABLE BOX
+================================ */
+
+.admin-table-box,
+.latest-box,
+.admin-data-box,
+.card-admin {
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    padding: 26px 22px 18px;
+}
+
+.admin-table-box h2,
+.latest-box h2,
+.admin-data-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 20px;
+}
+
+.admin-data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.btn-add-admin,
+.btn-tambah,
+.add-button {
+    height: 46px;
+    padding: 0 24px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    color: #111;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-add-admin:hover,
+.btn-tambah:hover,
+.add-button:hover {
+    background: #f1f1f1;
+    color: #111;
+}
+
+
+/* ===============================
+   TABLE
+================================ */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-wire-table,
+.admin-table,
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-wire-table thead,
+.admin-table thead,
+table thead {
+    background: #f1f1f1;
+    border: 1px solid #d8d8d8;
+}
+
+.admin-wire-table th,
+.admin-table th,
+table th {
+    padding: 16px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    vertical-align: middle;
+}
+
+.admin-wire-table td,
+.admin-table td,
+table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 14px;
+    color: #111;
+    vertical-align: middle;
+}
+
+.table-content-flex,
+.table-content {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.table-image-placeholder,
+.table-img {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #d8d8d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.table-image-placeholder i,
+.table-img i {
+    font-size: 22px;
+    color: #777;
+}
+
+.admin-thumb,
+.thumb,
+table img {
+    width: 110px;
+    height: 78px;
+    object-fit: cover;
+    border: 1px solid #d8d8d8;
+}
+
+.table-action,
+.action-buttons,
+.aksi {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.btn-table-action,
+.btn-action,
+.action-buttons a,
+.aksi a {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    color: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-table-action:hover,
+.btn-action:hover,
+.action-buttons a:hover,
+.aksi a:hover {
+    background: #f1f1f1;
+    color: #111;
+}
+
+.data-count {
+    font-size: 14px;
+    color: #111;
+    margin: 18px 0 0;
+}
+
+
+/* ===============================
+   ADMIN FOOTER
+================================ */
+
+.admin-bottom,
+.admin-footer {
+    height: 72px;
+    background: #fff;
+    border-top: 1px solid #d8d8d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #111;
+    margin-top: auto;
+}
+
+
+/* ===============================
+   RESPONSIVE ADMIN
+================================ */
+
+@media (max-width: 1200px) {
+    .dashboard-summary,
+    .dashboard-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 991px) {
+    .admin-sidebar,
+    .sidebar {
+        width: 240px;
+    }
+
+    .admin-main,
+    .main-content,
+    .content-wrapper {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+    }
+
+    .dashboard-summary,
+    .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar-brand,
+    .admin-brand {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .sidebar-menu,
+    .admin-menu {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-layout,
+    .admin-wrapper {
+        flex-direction: column;
+    }
+
+    .admin-sidebar,
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .admin-main,
+    .main-content,
+    .content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .admin-topbar,
+    .topbar {
+        height: 70px;
+        padding: 0 20px;
+    }
+
+    .admin-content,
+    .content {
+        padding: 28px 18px 34px;
+    }
+
+    .dashboard-summary,
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-data-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-add-admin,
+    .btn-tambah,
+    .add-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .admin-thumb,
+    .thumb,
+    table img {
+        width: 90px;
+        height: 64px;
+    }
+
+    .sidebar-logout,
+    .admin-logout {
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-card {
+        padding: 38px 24px 34px;
+    }
+
+    .login-card h1 {
+        font-size: 26px;
+    }
+
+    .sidebar-brand,
+    .admin-brand {
+        align-items: flex-start;
+    }
+}
+
+/* ===============================
+   FORM ADMIN
+================================ */
+
+.admin-form {
+    width: 100%;
+}
+
+.form-admin-group {
+    margin-bottom: 22px;
+}
+
+.form-admin-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.form-admin-group input,
+.form-admin-group textarea {
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #111;
+    background: #fff;
+    outline: none;
+}
+
+.form-admin-group textarea {
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.form-admin-group input:focus,
+.form-admin-group textarea:focus {
+    border-color: #999;
+}
+
+.form-admin-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.btn-submit-admin {
+    height: 46px;
+    padding: 0 28px;
+    border: none;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-submit-admin:hover {
+    background: #111;
+}
+
+.btn-cancel-admin {
+    height: 46px;
+    padding: 0 28px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background: #fff;
+    color: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-cancel-admin:hover {
+    background: #f1f1f1;
+    color: #111;
+}
+
+/* ===============================
+   ADMIN ABOUT - PENYESUAIAN FINAL
+================================ */
+
+/* Supaya halaman About mengikuti tampilan Galeri */
+.admin-data-box {
+    width: 100%;
+}
+
+/* Judul tabel About */
+.admin-table td:first-child {
+    font-weight: 600;
+    color: #111;
+}
+
+/* Isi singkat About */
+.admin-table td:nth-child(2) {
+    line-height: 1.8;
+    color: #333;
+}
+
+/* Kolom aksi */
+.admin-table td:last-child {
+    width: 130px;
+}
+
+/* Tombol aksi About dibuat sama seperti Galeri */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.action-buttons .btn-action {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    background: #fff;
+    color: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.action-buttons .btn-action:hover {
+    background: #f1f1f1;
+    color: #111;
+}
+
+
+/* ===============================
+   FORM ABOUT
+================================ */
+
+/* Form tambah/edit About tetap mengikuti form admin */
+.admin-form {
+    width: 100%;
+    max-width: 760px;
+}
+
+/* Select belum ada di CSS global, jadi perlu ditambahkan */
+.form-admin-group select {
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #111;
+    background: #fff;
+    outline: none;
+}
+
+.form-admin-group select:focus {
+    border-color: #999;
+}
+
+/* Textarea About */
+.form-admin-group textarea {
+    min-height: 260px;
+}
+
+/* Tombol Simpan dan Batal */
+.form-admin-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+
+/* ===============================
+   RESPONSIVE ABOUT ADMIN
+================================ */
+
+@media (max-width: 768px) {
+    .admin-form {
+        max-width: 100%;
+    }
+
+    .action-buttons {
+        gap: 10px;
+    }
+
+    .action-buttons .btn-action {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+
+    .form-admin-group textarea {
+        min-height: 220px;
+    }
+}
+
+
+ 
+
+ 
